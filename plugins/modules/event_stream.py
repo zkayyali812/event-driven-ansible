@@ -48,6 +48,8 @@ options:
   event_stream_type:
     description:
       - Type of the event stream.
+      - This field is not necessary to create an event stream and will be ignored.
+      - This field will be removed in version 3.0.0.
     type: str
     aliases:
       - type
@@ -62,7 +64,7 @@ options:
     description:
       - Enable the event stream to forward events to the rulebook activation where it is configured.
     type: bool
-    default: True
+    default: false
     version_added: 2.1.0
   state:
     description:
@@ -114,11 +116,11 @@ from ..module_utils.errors import EDAError
 def create_params(module: AnsibleModule, controller: Controller) -> dict[str, Any]:
     credential_params: dict[str, Any] = {}
 
-    if module.params.get("event_stream_type"):
-        credential_params["event_stream_type"] = module.params["event_stream_type"]
-
     if module.params.get("forward_events") is not None:
-        credential_params["test_mode"] = module.params["forward_events"]
+        if module.params["forward_events"]:
+            credential_params["test_mode"] = False
+        else:
+            credential_params["test_mode"] = True
 
     if module.params.get("headers"):
         credential_params["additional_data_headers"] = module.params["headers"]
@@ -154,10 +156,16 @@ def main() -> None:
         new_name=dict(type="str"),
         credential_name=dict(type="str", aliases=["credential"]),
         organization_name=dict(type="str", aliases=["organization"]),
-        event_stream_type=dict(type="str", aliases=["type"]),
         headers=dict(type="str", default=""),
-        forward_events=dict(type="bool", default=True),
+        forward_events=dict(type="bool", default=False),
         state=dict(choices=["present", "absent"], default="present"),
+        # fix: event_stream_type is not used in the module
+        event_stream_type=dict(
+            type="str",
+            aliases=["type"],
+            removed_in_version="3.0.0",
+            removed_from_collection="ansible.eda",
+        ),
     )
 
     argument_spec.update(AUTH_ARGSPEC)
@@ -166,7 +174,7 @@ def main() -> None:
         (
             "state",
             "present",
-            ("name", "credential_name", "organization_name", "event_stream_type"),
+            ("name", "credential_name", "organization_name"),
         )
     ]
 
@@ -203,6 +211,7 @@ def main() -> None:
     new_name = module.params.get("new_name")
 
     # Attempt to look up event stream based on the provided name
+    event_stream = {}
     try:
         event_stream = controller.get_exactly_one(event_stream_endpoint, name=name)
     except EDAError as e:
