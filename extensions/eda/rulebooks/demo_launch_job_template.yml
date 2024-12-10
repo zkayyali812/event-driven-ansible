@@ -7,9 +7,11 @@
         host: 0.0.0.0
   rules:
     - name: Launch Job Template Rule
-      condition: true
-      action:
-        run_job_template:
+      condition: event.payload != ""
+      actions:
+      - print_event:
+          pretty: true
+      - run_job_template:
           name: Demo Job Template
           organization: Default
 ...
