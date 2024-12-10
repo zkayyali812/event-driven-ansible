@@ -7,7 +7,7 @@
         host: 0.0.0.0
   rules:
     - name: Launch Job Template Rule
-      condition: event.payload != ""
+      condition: event.payload.payload[0].pusher != ""
       actions:
       - print_event:
           pretty: true
