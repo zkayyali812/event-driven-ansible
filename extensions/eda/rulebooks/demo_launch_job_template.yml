@@ -9,14 +9,9 @@
     - name: Parse Event
       condition: true
       actions:
-      - set_fact:
-          fact:
-            payload: "{{ event.payload.payload[0] }}"
-      - debug:
-          var: facts
-    # - name: Run Job Template
-    #   condition: facts.payload
-    #   - run_job_template:
-    #       name: Demo Job Template
-    #       organization: Default
+      - print_event:
+          pretty: true
+      - run_job_template:
+          name: Demo Job Template
+          organization: Default
 ...
