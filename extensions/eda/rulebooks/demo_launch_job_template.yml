@@ -13,7 +13,7 @@
           fact:
             payload: "{{ event.payload.payload[0] }}"
       - debug:
-          var: facts.payload
+          var: facts
     # - name: Run Job Template
     #   condition: facts.payload
     #   - run_job_template:
