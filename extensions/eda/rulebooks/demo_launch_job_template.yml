@@ -6,7 +6,7 @@
         port: "{{ port | default(5555) }}"
         host: 0.0.0.0
   rules:
-    - name: Parse Event
+    - name: Run Job Template
       condition: true
       actions:
       - print_event:
