@@ -6,12 +6,17 @@
         port: "{{ port | default(5555) }}"
         host: 0.0.0.0
   rules:
-    - name: Launch Job Template Rule
-      condition: event.payload.payload[0].pusher != ""
+    - name: Parse Event
+      condition: true
       actions:
-      - print_event:
-          pretty: true
-      - run_job_template:
-          name: Demo Job Template
-          organization: Default
+      - set_fact:
+          fact:
+            payload: "{{ event.payload.payload[0] }}"
+      - debug:
+          var: facts.payload
+    # - name: Run Job Template
+    #   condition: facts.payload
+    #   - run_job_template:
+    #       name: Demo Job Template
+    #       organization: Default
 ...
