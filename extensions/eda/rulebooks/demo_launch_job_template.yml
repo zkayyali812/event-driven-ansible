@@ -12,6 +12,8 @@
       - print_event:
           pretty: true
       - run_job_template:
-          name: Demo Job Template
+          name: Resolve Demo Event
           organization: Default
+          job_args:
+            payload: "{{ event.payload }}"
 ...
