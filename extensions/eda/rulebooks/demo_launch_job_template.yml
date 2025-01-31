@@ -1,4 +1,4 @@
----
+v---
 - name: Webhook demo to launch a job template
   hosts: all
   sources:
@@ -16,5 +16,5 @@
           organization: Default
           job_args:
             extra_vars:
-              payload: "{{ payload }}"
+              payload: "{{ event.payload.data }}"
 ...
