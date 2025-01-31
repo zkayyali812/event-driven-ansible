@@ -16,5 +16,5 @@
           organization: Default
           job_args:
             extra_vars:
-              payload: "{{ event.payload.data }}"
+              payload: "{{ event.payload }}"
 ...
