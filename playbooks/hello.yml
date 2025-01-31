@@ -1,8 +1,10 @@
 ---
-- name: Hello
+- name: Resolve Demo Event
   hosts: localhost
   gather_facts: false
+  vars:
+    payload: 
   tasks:
-    - name: Print hello
+    - name: Print payload
       ansible.builtin.debug:
-        msg: hello
+        msg: "{{ payload }}"
