@@ -7,4 +7,4 @@
   tasks:
     - name: Print payload
       ansible.builtin.debug:
-        msg: "{{ ansible_eda.event }}"
+        msg: "{{ payload }}"
