@@ -15,5 +15,5 @@
           name: Resolve Demo Event
           organization: Default
           job_args:
-            payload: "{{ event.payload }}"
+            payload: "{{ event }}"
 ...
