@@ -1,4 +1,4 @@
-v---
+---
 - name: Webhook demo to launch a job template
   hosts: all
   sources:
