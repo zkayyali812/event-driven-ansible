@@ -7,7 +7,7 @@
         token: "{{ eda_auth_token }}"
   rules:
     - name: Output ServiceNow Information
-      condition: event.meta is definied
+      condition: event.meta is defined
       action:
         print_event:
           pretty: true
