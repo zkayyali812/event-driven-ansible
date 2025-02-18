@@ -2,7 +2,7 @@
   hosts: all
   sources:
     - name: Listen for alerts from ServiceNow
-      ansible.eda.webhook:
+      ansible.dea.webhook:
         host: 0.0.0.0
         port: 5000
         token: "{{ eda_auth_token }}"
