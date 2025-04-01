@@ -19,7 +19,9 @@
   rules:
     - name: Say Hello
       condition: event.msg == "Welcome"
-      action:
-        debug:
-          msg: "Hello from EDA"
-...
+      actions:
+        - debug:
+        - print_event:
+            pretty: true
+        - debug:
+            var: i_dont_exist
